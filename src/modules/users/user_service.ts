@@ -25,16 +25,15 @@ export const deleteUser = async (id: string) => {
     return await User.deleteOne({ _id: id });
 };
 
-export const loginUser = async (email: string, password: string): Promise<{ id: string; email: string } | null> => {
-
+export const loginUser = async (email: string, password: string): Promise<IUser | null> => {
     const user = await User.findOne({ email });
     if (!user) {
-        throw new Error("usuari no trobat");
+        throw new Error("User not found");
     }
 
     if (user.password !== password) {
-        throw new Error("contrasenya incorrecta");
+        throw new Error("Incorrect password");
     }
 
-    return { id: user._id.toString(), email: user.email };
+    return user;
 };
